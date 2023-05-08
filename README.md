@@ -19,152 +19,79 @@ Apply Feature Generation techniques to all the feature of the data set
 Save the data to the file
 
 
-# CODE
-``
+# PROGRAM
+```
 Program Developed: Jeevitha.E
 Register number:212222230054
 ```
-# data.csv:C
+# CODE
+# Encoding Data.csv
 ```
 import pandas as pd
-df=pd.read_csv("data.csv")
-df
-
-#feature generation
-import category_encoders as ce
-be=ce.BinaryEncoder()
-ndf=be.fit_transform(df["bin_1"])
-df["bin_1"] = be.fit_transform(df["bin_1"])
-ndf
-
-ndf2=be.fit_transform(df["bin_2"])
-df["bin_2"] = be.fit_transform(df["bin_2"])
-ndf2
-
-df1=df.copy()
-from sklearn.preprocessing import LabelEncoder,OrdinalEncoder,OneHotEncoder
-import category_encoders as ce
-be=ce.BinaryEncoder()
-ohe=OneHotEncoder(sparse=False)
-le=LabelEncoder()
-oe=OrdinalEncoder()
-
-
-df1["City"] = ohe.fit_transform(df1[["City"]])
-
-temp=['Cold','Warm','Hot','Very Hot']
-oe1=OrdinalEncoder(categories=[temp])
-df1['Ord_1'] = oe1.fit_transform(df1[["Ord_1"]])
-
-edu=['High School','Diploma','Bachelors','Masters','PhD']
-oe2=OrdinalEncoder(categories=[edu])
-df1['Ord_2']= oe2.fit_transform(df1[["Ord_2"]])
-df1
-
-#feature scaling
-from sklearn.preprocessing import MinMaxScaler
-sc=MinMaxScaler()
-df2=pd.DataFrame(sc.fit_transform(df1),columns=['id', 'bin_1', 'bin_2', 'City', 'Ord_1','Ord_2','Target'])
-df2
-
-from sklearn.preprocessing import StandardScaler
-sc1=StandardScaler()
-df3=pd.DataFrame(sc1.fit_transform(df1),columns=['id', 'bin_1', 'bin_2', 'City', 'Ord_1','Ord_2','Target'])
-df3
-
-from sklearn.preprocessing import MaxAbsScaler
-sc2=MaxAbsScaler()
-df4=pd.DataFrame(sc2.fit_transform(df1),columns=['id', 'bin_1', 'bin_2', 'City', 'Ord_1','Ord_2','Target'])
-df4
-
-from sklearn.preprocessing import RobustScaler
-sc3=RobustScaler()
-df5=pd.DataFrame(sc3.fit_transform(df1),columns=['id', 'bin_1', 'bin_2', 'City', 'Ord_1','Ord_2','Target'])
-df5
-```
-# Encoding data:
-```
-import pandas as pd
-df=pd.read_csv("Encoding Data.csv")
-df
-## GENERATION
-import category_encoders as ce
-be=ce.BinaryEncoder()
-ndf=be.fit_transform(df["bin_1"])
-df["bin_1"] = be.fit_transform(df["bin_1"])
-ndf
-be=ce.BinaryEncoder()
-ndf2=be.fit_transform(df["bin_2"])
-df["bin_2"] = be.fit_transform(df["bin_2"])
-ndf2
-df1=df.copy()
+df=pd.read_csv('Encoding Data.csv')
+df.head()
+df['ord_2'].unique()
 from sklearn.preprocessing import LabelEncoder,OrdinalEncoder
-le=LabelEncoder()
-oe=OrdinalEncoder()
-df1["nom_0"] = oe.fit_transform(df1[["nom_0"]])
-temp=['Cold','Warm','Hot']
-oe2=OrdinalEncoder(categories=[temp])
-df1['ord_2'] = oe2.fit_transform(df1[['ord_2']])
-df1
-## SCALING:
-from sklearn.preprocessing import MinMaxScaler
-sc=MinMaxScaler()
-df0=pd.DataFrame(sc.fit_transform(df1),columns=['id', 'bin_1', 'bin_2', 'nom_0','ord_2'])
-df0
-from sklearn.preprocessing import StandardScaler
-sc1=StandardScaler()
-df2=pd.DataFrame(sc1.fit_transform(df1),columns=['id', 'bin_1', 'bin_2', 'nom_0','ord_2'])
-df2
-from sklearn.preprocessing import MaxAbsScaler
-sc2=MaxAbsScaler()
-df3=pd.DataFrame(sc2.fit_transform(df1),columns=['id', 'bin_1', 'bin_2', 'nom_0','ord_2'])
-df3
-from sklearn.preprocessing import RobustScaler
-sc3=RobustScaler()
-df4=pd.DataFrame(sc3.fit_transform(df1),columns=['id', 'bin_1', 'bin_2', 'nom_0','ord_2'])
-df4
+climate = ['Cold','Warm','Hot']
+en= OrdinalEncoder(categories = [climate])
+df['ord_2']=en.fit_transform(df[["ord_2"]])
+df
+le = LabelEncoder()
+df['Nom_0'] = le.fit_transform(df[["nom_0"]])
+df
+!pip install --upgrade category_encoders
+from category_encoders import BinaryEncoder
+be = BinaryEncoder()
+data = be.fit_transform(df['bin_1'])
+df  = pd.concat([df,data],axis=1)
+df
+be = BinaryEncoder()
+data = be.fit_transform(df['bin_2'])
+df  = pd.concat([df,data],axis=1)
+df
 ```
-# Titanic Dataset:
-```import pandas as pd
-df=pd.read_csv("titanic_dataset.csv")
-df
-df.drop("Name",axis=1,inplace=True)
-df.drop("Ticket",axis=1,inplace=True)
-df.drop("Cabin",axis=1,inplace=True)
-df.isnull().sum()
-
-df["Age"]=df["Age"].fillna(df["Age"].median())
-df["Embarked"]=df["Embarked"].fillna(df["Embarked"].mode()[0])
-df.isnull().sum()
-df
-## ENCODING
-import category_encoders as ce
-be=ce.BinaryEncoder()
-ndf=be.fit_transform(df['Sex'])
-ndf
-df1=df.copy()
-from sklearn.preprocessing import LabelEncoder, OrdinalEncoder
-embark=['S','C','Q']
-e1=OrdinalEncoder(categories=[embark])
-df1['Embarked'] = e1.fit_transform(df[['Embarked']])
+# Data.csv
+```
+df1 = pd.read_csv("data.csv")
+df1.head()
+df1['Ord_1'].unique()
+climate = ['Cold','Warm','Hot','Very Hot']
+en= OrdinalEncoder(categories = [climate])
+df1['Ord_1']=en.fit_transform(df1[["Ord_1"]])
 df1
-
-## SCALING
-from sklearn.preprocessing import MinMaxScaler
-sc=MinMaxScaler()
-df0=pd.DataFrame(sc.fit_transform(df1),columns=['PassengerId', 'Survived', 'Pclass', 'Sex','Age','SibSp','Parch','Fare','Embarked'])
-df0
-from sklearn.preprocessing import StandardScaler
-sc1=StandardScaler()
-df2=pd.DataFrame(sc1.fit_transform(df1),columns=['PassengerId', 'Survived', 'Pclass', 'Sex','Age','SibSp','Parch','Fare','Embarked'])
+df1['Ord_2'].unique()
+cl = ['High School','Diploma','Bachelors','Masters','PhD']
+en= OrdinalEncoder(categories = [cl])
+df1['Ord_2']=en.fit_transform(df1[["Ord_2"]])
+df1
+le = LabelEncoder()
+df1['City'] = le.fit_transform(df1[["City"]])
+df1
+from category_encoders import BinaryEncoder
+be = BinaryEncoder()
+dat = be.fit_transform(df1['bin_1'])
+df1  = pd.concat([df1,dat],axis=1)
+df1
+from category_encoders import BinaryEncoder
+be = BinaryEncoder()
+data1 = be.fit_transform(df1['bin_2'])
+df1  = pd.concat([df1,data1],axis=1)
+df1
+```
+# Titanic_dataset.csv
+```
+df2 = pd.read_csv("titanic_dataset.csv")
+df2.head()
+be = BinaryEncoder()
+data2 = be.fit_transform(df2['Sex'])
+df2  = pd.concat([df2,data2],axis=1)
 df2
-from sklearn.preprocessing import MaxAbsScaler
-sc2=MaxAbsScaler()
-df3=pd.DataFrame(sc2.fit_transform(df1),columns=['PassengerId', 'Survived', 'Pclass', 'Sex','Age','SibSp','Parch','Fare','Embarked'])
-df3
-from sklearn.preprocessing import RobustScaler
-sc3=RobustScaler()
-df4=pd.DataFrame(sc3.fit_transform(df1),columns=['PassengerId', 'Survived', 'Pclass', 'Sex','Age','SibSp','Parch','Fare','Embarked'])
-df4
+df2 = pd.get_dummies(df2, prefix=['Embarked'] ,columns=['Embarked'])
+df2
 ```
 # OUPUT
+# Encoding Data.csv
+![image](https://user-images.githubusercontent.com/118708245/236874053-58694ed3-8dc5-48b1-8614-3a2960cb5b07.png)
+![image](https://user-images.githubusercontent.com/118708245/236874152-330cc06a-ecef-44df-80ec-dc4995ab4625.png)
+![image](https://user-images.githubusercontent.com/118708245/236874205-07d0ddd3-775e-4d7a-9045-dfb909c18e34.png)
+![Uploading image.png…]()
