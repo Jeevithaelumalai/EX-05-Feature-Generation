@@ -89,7 +89,7 @@ df2
 df2 = pd.get_dummies(df2, prefix=['Embarked'] ,columns=['Embarked'])
 df2
 ```
-# OUPUT
+# OUTPUT
 # Encoding Data.csv
 
 ![image](https://user-images.githubusercontent.com/118708245/236874053-58694ed3-8dc5-48b1-8614-3a2960cb5b07.png)
