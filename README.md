@@ -91,7 +91,10 @@ df2
 ```
 # OUPUT
 # Encoding Data.csv
+
 ![image](https://user-images.githubusercontent.com/118708245/236874053-58694ed3-8dc5-48b1-8614-3a2960cb5b07.png)
+
 ![image](https://user-images.githubusercontent.com/118708245/236874152-330cc06a-ecef-44df-80ec-dc4995ab4625.png)
+
 ![image](https://user-images.githubusercontent.com/118708245/236874205-07d0ddd3-775e-4d7a-9045-dfb909c18e34.png)
-![Uploading image.png…]()
+
